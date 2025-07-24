@@ -9,10 +9,14 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from faster_whisper import WhisperModel  # pip install faster-whisper
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from dotenv import load_dotenv
 import openai  # pip install openai
 import uvicorn
+
+
+
 
 # Carga variables de entorno
 env_path = Path(__file__).parent / '.env'
@@ -47,6 +51,15 @@ whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
 
 # Inicializa FastAPI
 app = FastAPI(title="Servicio Unificado: Transcribe + Extracción Historia Clínica IA")
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class AIResponse(BaseModel):
     status: str
