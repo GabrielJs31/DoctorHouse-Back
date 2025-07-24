@@ -1,51 +1,95 @@
+import json
 import os
+import re
 import time
 from typing import Dict, Any
 
-import httpx                   # pip install httpx
+import httpx  # pip install httpx
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from faster_whisper import WhisperModel
+from faster_whisper import WhisperModel  # pip install faster-whisper
 from pathlib import Path
 from dotenv import load_dotenv
+import openai  # pip install openai
+import uvicorn
 
-load_dotenv()
+# Carga variables de entorno
+env_path = Path(__file__).parent / '.env'
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+else:
+    load_dotenv()
 
-# ─── Configuración Azure ──────────────────────────────────────────────────────
-AZURE_API_KEY            = os.getenv("AZURE_API_KEY")
-AZURE_API_VERSION        = os.getenv("AZURE_OPENAI_API_VERSION")
-AZURE_API_ENDPOINT       = os.getenv("AZURE_OPENAI_ENDPOINT")
+# Función para validar entornos
+def get_env(var_name: str) -> str:
+    value = os.getenv(var_name)
+    if not value:
+        raise RuntimeError(f"La variable de entorno '{var_name}' no está definida.")
+    return value
 
-# ─── Carga modelo Whisper ────────────────────────────────────────────────────
-BASE_DIR   = Path(__file__).parent
-AUDIO_DIR  = BASE_DIR / "audio"
-AUDIO_DIR.mkdir(exist_ok=True)
+# Configuración Azure
+AZURE_API_KEY      = get_env("AZURE_API_KEY")
+AZURE_API_VERSION  = get_env("AZURE_OPENAI_API_VERSION")
+AZURE_API_ENDPOINT = get_env("AZURE_OPENAI_ENDPOINT")
+
+# (opcional) Configuración cliente OpenAI, no usado en httpx pero por consistencia
+openai.api_key     = AZURE_API_KEY
+openai.api_version = AZURE_API_VERSION
+openai.api_base    = AZURE_API_ENDPOINT
+
+# Prepara carpeta de audio
+audio_dir = Path(__file__).parent / "audio"
+audio_dir.mkdir(parents=True, exist_ok=True)
+
+# Carga modelo Whisper
 whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
 
-# ─── FastAPI ──────────────────────────────────────────────────────────────────
-app = FastAPI(title="Servicio Unificado: Transcribe + Extracción IA")
+# Inicializa FastAPI
+app = FastAPI(title="Servicio Unificado: Transcribe + Extracción Historia Clínica IA")
 
 class AIResponse(BaseModel):
     status: str
-    transcription: str | None = None
-    extracted_data: Dict[str, Any] | str
+    extracted_data: Dict[str, Any]
 
-async def extract_data_via_azure(txt: str) -> Any:
-    prompt = (
-        "Eres un extractor de datos. Devuelve un JSON con los campos "
-        "\"nombre\", \"fecha\", \"monto\" encontrados en el texto. "
-        "Si alguno no existe, pon null.\n\n"
-        f"Texto:\n\"\"\"\n{txt}\n\"\"\""
+
+def clean_json_response(raw: str) -> Dict[str, Any]:
+    # Limpia posibles bloques de markdown y parsea JSON
+    cleaned = re.sub(r'^```json\s*|\s*```$', '', raw, flags=re.IGNORECASE).strip()
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=500, detail=f"Error parseando JSON de IA: {e}")
+
+
+async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
+    # Construye prompt con todos los campos requeridos
+    prompt_intro = (
+        "Extrae todos los campos de la historia clínica del siguiente texto y organízalos en formato JSON. "
+        "Si algún dato falta, devuelve 'N/A'. Los datos deben ser solo el valor numérico o texto. "
+        "Ignora cualquier otro texto que no corresponda a los campos."
     )
-    headers = {
-        "Content-Type": "application/json",
-        "api-key": AZURE_API_KEY
-    }
-    payload = {
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0
-    }
+    fields_list = (
+        "### 1. DATOS PERSONALES\n"
+        "- nombre\n- apellido\n- cédula\n- sexo\n- tipo_sangre\n- fecha_nacimiento\n"
+        "- edad\n- teléfono\n- móvil\n- fecha_consulta\n"
+        "### 2. MOTIVO DE CONSULTA\n- motivo\n- lugar\n"
+        "### 3. ENFERMEDAD ACTUAL\n- descripción\n"
+        "### 4. ANTECEDENTES\n- personales\n- alergias\n- medicamentos\n"
+        "- problemas_cardiovasculares\n- fuma\n- familiares\n"
+        "- intervenciones_quirúrgicas\n- problemas_coagulación\n- problemas_anestésicos\n- alcohol\n"
+        "### 5. SIGNOS VITALES\n- peso_kg\n- saturación_oxígeno\n- frecuencia_respiratoria\n"
+        "- frecuencia_cardíaca\n- presión_arterial\n- temperatura_c\n"
+        "### 6. EXAMEN FÍSICO\n- cabeza_cuello\n- tórax\n- rscs\n- abdomen\n- extremidades\n"
+        "### 7. DIAGNÓSTICO Y TRATAMIENTO\n- diagnóstico_presuntivo\n- tratamiento"
+    )
+    prompt = (
+        f"{prompt_intro}\n\n{fields_list}\n"
+        f"\nTexto:\n\"\"\"\n{txt}\n\"\"\""
+    )
+
+    headers = {"Content-Type": "application/json", "api-key": AZURE_API_KEY}
+    payload = {"messages": [{"role": "user", "content": prompt}], "temperature": 0}
 
     async with httpx.AsyncClient(timeout=30) as client:
         resp = await client.post(
@@ -54,70 +98,59 @@ async def extract_data_via_azure(txt: str) -> Any:
             headers=headers,
             json=payload
         )
-
     if resp.status_code != 200:
-        raise HTTPException(
-            status_code=502,
-            detail=f"Error IA ({resp.status_code}): {resp.text}"
-        )
+        raise HTTPException(status_code=502, detail=f"Error IA ({resp.status_code}): {resp.text}")
 
-    result = resp.json()
-    # La respuesta de Azure suele venir como cadena JSON; 
-    # si quieres devolverla ya parseada:
-    try:
-        return result["choices"][0]["message"]["content"]
-    except Exception:
-        return result
+    data = resp.json()
+    raw = data.get("choices", [])[0].get("message", {}).get("content", "")
+    if not raw or not raw.strip():
+        raise HTTPException(status_code=502, detail="Respuesta vacía de IA: no hay contenido para parsear")
+    return clean_json_response(raw)
+
 
 @app.post("/transcribe", response_model=AIResponse)
 async def transcribe_audio(file: UploadFile = File(...)):
-    # Validar tipo de archivo
-    if not file.content_type.startswith("audio/"):
-        raise HTTPException(400, "Solo archivos de audio permitidos")
-    # Guardar temporalmente
-    file_path = AUDIO_DIR / file.filename
-    with open(file_path, "wb") as f:
+    # Aceptar audio wav, mp3, ogg
+    filename = file.filename.lower()
+    if not (file.content_type.startswith("audio/") or filename.endswith(('.wav', '.mp3', '.ogg'))):
+        raise HTTPException(status_code=400, detail="Solo archivos de audio permitidos (.wav, .mp3, .ogg)")
+
+    # Guarda audio en carpeta `audio`
+    audio_path = audio_dir / file.filename
+    with open(audio_path, "wb") as f:
         f.write(await file.read())
 
-    # Transcribir
+    # Transcribe audio
     start = time.time()
-    segments, info = whisper_model.transcribe(
-        str(file_path),
-        beam_size=1,
-        vad_filter=True
-    )
-    transcription = "\n".join(
-        f"[{s.start:.2f}s -> {s.end:.2f}s] {s.text}" for s in segments
-    )
-    elapsed = time.time() - start
+    segments, _ = whisper_model.transcribe(str(audio_path), beam_size=1, vad_filter=True)
+    transcription = "\n".join(f"[{s.start:.2f}s → {s.end:.2f}s] {s.text}" for s in segments)
+    print(f"Transcripción en {time.time() - start:.1f}s")
 
-    # Extraer datos usando Azure
+    # Guarda la transcripción en un archivo .txt
+    txt_path = audio_path.with_suffix('.txt')
+    with open(txt_path, 'w', encoding='utf-8') as f:
+        f.write(transcription)
+
+    # Extrae datos con Azure
     extracted = await extract_data_via_azure(transcription)
 
-    return AIResponse(
-        status="ok",
-        transcription=transcription,
-        extracted_data=extracted
-    )
+    # Devuelve solo el JSON con extracted_data
+    return JSONResponse(content={"status": "ok", "extracted_data": extracted})
+
 
 @app.post("/upload_txt", response_model=AIResponse)
 async def upload_txt(file: UploadFile = File(...)):
     if file.content_type != "text/plain":
-        raise HTTPException(400, "Solo archivos .txt permitidos")
+        raise HTTPException(status_code=400, detail="Solo archivos .txt permitidos")
     txt = (await file.read()).decode("utf-8", errors="strict")
     extracted = await extract_data_via_azure(txt)
+    return JSONResponse(content={"status": "ok", "extracted_data": extracted})
 
-    return AIResponse(
-        status="ok",
-        extracted_data=extracted
-    )
 
 @app.get("/health")
 def health():
     return {"status": "alive"}
 
+
 if __name__ == "__main__":
-    # Comando para arrancar:
-    # uvicorn api:app --host 0.0.0.0 --port 8000 --reload
-    import uvicorn
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api_IA:app", host="0.0.0.0", port=8000, reload=True)
