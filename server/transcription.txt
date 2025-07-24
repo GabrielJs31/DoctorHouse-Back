@@ -1,0 +1,178 @@
+[0.05s -> 6.45s]  El mercado lo mueven los traders institucionales. Los ganan, el público pierde, siempre.
+[6.45s -> 12.77s]  Ahora bien, ¿cómo puede ser que se coordinen para salir vencedores? ¿Qué lenguaje utilizan?
+[12.77s -> 17.53s]  ¿Cómo saben cuándo deben aguantar un mercado? ¿Cuándo deben mover un mercado? En este vídeo
+[17.53s -> 21.37s]  me gustará que veamos tres aspectos de su funcionamiento para que los tengas en
+[21.37s -> 26.33s]  cuenta en tu propia operativa. El primero es quiénes son, el segundo es qué buscan y el
+[26.33s -> 32.01s]  tercero, cómo lo logran. Me preguntabais en un comentario cómo lo hacen los traders
+[32.01s -> 37.97s]  profesionales para estar de acuerdo en cómo mover el precio, es decir, cómo actúan tan
+[37.97s -> 42.93s]  coordinados. Hagamos algunas consideraciones que nos permitan comprenderlo y, sobre todo,
+[42.93s -> 48.13s]  veamos si eso lo podemos utilizar a nuestro favor. Comencemos. ¿Quiénes son los traders
+[48.13s -> 55.37s]  institucionales? Son todos aquellos operadores que gestionan grandes cuentas, grandes cantidades
+[55.37s -> 60.01s]  de capital, traders de fondos de cobertura, pancos privados, fondos centrales, fondos de
+[60.01s -> 66.89s]  inversión, traders que disponen de dinero casi ilimitado. La Wikipedia nos arroja esta
+[66.89s -> 73.53s]  lista de los principales fondos de cobertura de los principales hedge funds. En esta lista
+[73.53s -> 81.61s]  vemos que el fondo, creado por Ray Dalio, Bridge Water Associates, cuenta con 132.800
+[81.61s -> 91.77s]  millones de dólares. El siguiente con 83.700 millones de dólares. El siguiente 59.100
+[91.77s -> 101.29s]  millones de dólares. Incluso el 15 de la lista cuenta con 25.300 millones de dólares. Este
+[101.29s -> 106.89s]  es un perfil que participa en los mercados. Luego tenemos bancos, luego tenemos aseguradoras,
+[106.97s -> 112.17s]  luego tenemos grupos de traders que no aparecen en el radar. Subjetivos tomar posiciones por
+[112.17s -> 119.77s]  valor de millones de dólares. 132.000 millones de dólares. Estos agentes no son como tú
+[119.77s -> 125.09s]  ni como yo. No están operando con 10.000 dólares, esperando ganar 10 ticks en un retroceso
+[125.09s -> 131.05s]  del precio. No están buscando la operación que dure 10 minutos. Están tomando posiciones
+[131.21s -> 136.93s]  por decenas de millones de dólares. Cuando quieren posicionarse en un mercado, no esperan
+[136.93s -> 142.77s]  salir 5 minutos más tarde, sino participar en un movimiento que se puede extender durante
+[142.77s -> 150.05s]  meses o incluso años. Pero estos operadores no forman un solo grupo. Nosotros podemos verlos
+[150.05s -> 155.21s]  como pertenecientes a la misma familia, cuentas enormes, cuentas gigantes, pero en realidad
+[155.21s -> 161.05s]  compiten entre ellos. No son una asociación que se coordina en la sombra para ir en contra
+[161.05s -> 168.01s]  del público, sino más bien a gente individuales que buscan maximizar su propio interés. Imagina
+[168.01s -> 173.89s]  por un momento la actividad alrededor de los contratos de futuro sobre el petróleo, un
+[173.89s -> 179.97s]  bien estratégico donde pueden haber grupos de traders de determinados países desde Arabia
+[179.97s -> 185.69s]  Saudita hasta Rusia, hasta Estados Unidos o Venezuela, compitiendo por intentar moverlo
+[185.69s -> 191.53s]  a favor del interés individual de cada uno de estos grupos. Ahora bien, es en el proceso
+[191.53s -> 197.85s]  natural de búsqueda de su propio interés que expresan en el mercado determinadas formas
+[197.85s -> 203.41s]  al hacerlo, dejan huellas que nosotros podemos detectar. Pero no es que utilicen un código
+[203.41s -> 207.97s]  secreto entre ellos para ir en contra de tus 10.000 dólares. Ni te conocen ni les
+[207.97s -> 213.97s]  importan, insisto, buscan su propio beneficio. Ahora bien, si observas qué sucede en el mercado,
+[213.97s -> 220.57s]  en cualquier mercado organizado, verás que se repiten la misma danza. Sus movimientos
+[220.57s -> 226.37s]  siguen patrones recurrentes y estos necesarios están obligados a hacer lo mismo una y otra
+[226.37s -> 232.05s]  vez debido a sus propias limitantes. La otra cara de la moneda. Ellos disponen de
+[232.13s -> 239.05s]  fondos casi limitados, lo que a su vez les obliga a participar siguiendo un proceso específico.
+[239.05s -> 243.85s]  Si quieren comprar un mercado, si quieren participar comprando, no pueden arreglar el botón de compra
+[243.85s -> 249.17s]  que utilizas tú para entrar dos lotes largos. Comprender eso es fundamental y a la vez es
+[249.17s -> 255.09s]  muy útil. No pueden porque en un momento dado, en un mercado cualquiera, solamente puedes comprar
+[255.09s -> 263.09s]  lo que está a la venta, la oferta es limitada, no infinita. A un nivel de precios, la oferta es la
+[263.09s -> 268.93s]  que es. De ahí que para comprar más de lo que se está ofreciendo, se ven obligados a utilizar
+[268.93s -> 275.61s]  una estrategia muy especial. O bien esperan a que aparezca esa oferta y a medida que va
+[275.61s -> 283.81s]  apareciendo la van acumulando, o bien ayudan a que esa oferta aparezca. Los procesos a través
+[283.89s -> 290.49s]  de los cuales los operadores institucionales ayudan a que aparezca esa oferta son los procesos
+[290.49s -> 295.89s]  de manipulación, a los que nos hemos referido en otros vídeos. Al mover rápidamente el mercado
+[295.89s -> 302.53s]  en determinada dirección, arrastran a otros participantes a entrar de forma emocional
+[302.53s -> 308.97s]  o les hacen saltar sus stops. Pero el punto a señalar es que no hacen lo que haces
+[309.09s -> 314.41s]  tú, no operan como tú. Siguiente aspecto, ¿qué buscan cuando participan en un mercado
+[314.41s -> 320.49s]  están persiguiendo su propio interés, maximizar el beneficio, ya sea a través de una cobertura
+[320.49s -> 324.57s]  de riesgos o simplemente posicionándose en un mercado sobre el que tienen una visión
+[324.57s -> 330.13s]  de futuro determinada? Si creen que el mercado irá al alza, tomarán posiciones largas,
+[330.13s -> 335.77s]  las acumularán. Igual que harías tú, la diferencia es que ellos pueden ayudar
+[335.89s -> 341.13s]  al mercado a que se mueve la dirección que satisface sus intereses. Pueden, por ejemplo, defender
+[341.13s -> 346.73s]  un nivel de precios, frenar un avance, crear un retroceso acelerado. De forma individual
+[346.73s -> 352.77s]  no tienen un poder absoluto, no pueden controlar un mercado. Tienen poder relativo, pueden
+[352.77s -> 357.89s]  influir en el mercado. Ni el mismísimo Banco de Inglaterra pudo defender el valor de la
+[357.89s -> 364.17s]  libra a esta rila cuando George Soros se posicionó en su contra. Pero como colectivo
+[364.25s -> 371.45s]  son implacables. El punto relevante es cómo logran coordinarse. ¿Lo ves? ¿Qué hacen para
+[371.45s -> 376.93s]  mover un mercado en una dirección? ¿Se reúnen en secreto y comparten un mismo código? Ya
+[376.93s -> 381.45s]  hemos dicho que no. No luchan en un mismo equipo, sino que lo hacen maximizando su
+[381.45s -> 386.93s]  interés individual. Compiten entre ellos por los mismos recursos finitos. No se reparten
+[386.93s -> 391.93s]  la oferta que existe si quieren comprar, ni mucho menos lo hacen de una forma ordenada,
+[392.01s -> 397.05s]  sino que compiten por la misma oferta. Pero están sujetos a las mismas limitantes, no pueden
+[397.05s -> 402.17s]  simplemente comprar y ya está. Deben hacerlo de una forma específica y esta forma, repito,
+[402.17s -> 407.25s]  deja huellas. ¿Cómo logra un Banco de Peces nadar en formación? ¿De qué manera una
+[407.25s -> 413.41s]  bandada de pájaros logra coordinarse? ¿Y una jauría de lobos? ¿Cómo caza utilizan
+[413.41s -> 416.93s]  un walkie-talkie? Está claro que no, pero también debe estar lo que son capaces
+[416.93s -> 423.93s]  de detectar ciertas claves, ciertas pistas informativas que utilizan en su toma de decisiones.
+[424.41s -> 428.97s]  En su caso, estos comportamientos animales están básicamente en sus instintos. En los operadores
+[428.97s -> 434.69s]  institucionales, en cambio, es una habilidad que se adquiere. Ellos aprenden a leer esa
+[434.69s -> 439.97s]  información del mercado y de la sociedad. Aclaremos una cosa. Los grandes fondos de
+[439.97s -> 444.73s]  inversión no necesitan mirar un gráfico de velas japonesas de 5 minutos ni tan
+[444.73s -> 449.09s]  siquiera un gráfico semanal. Hay muchos traders profesionales que no utilizan estos
+[449.09s -> 454.25s]  instrumentos para tomar decisiones, sino otros muy distintos. Y ya hemos comentado que no
+[454.25s -> 459.89s]  hacen lo mismo que tú. Pueden tomar el pulso a la economía de un determinado país y posicionarse
+[459.89s -> 463.73s]  comprando bonos. Pueden anticipar un conflicto bélico y utilizar esa información para
+[463.73s -> 467.85s]  salir de un sector. Pero también hay operadores en gráficos de 5 minutos, también los
+[467.85s -> 473.05s]  hay en el intradía, que mueven un capital mil veces superior al que mueves tú.
+[473.05s -> 479.61s]  También los hay entrando y saliendo en cuestión de segundos. Tal vez esta fractalización es
+[479.61s -> 485.21s]  lo que aporta esa extra de complejidad que me tiene fascinado. Un operador institucional,
+[485.21s -> 491.13s]  en una operativa semanal y otro operador de su mismo grupo, en una operativa intradillaria,
+[491.13s -> 497.17s]  compitiendo, tomando posiciones opuestas. Y todas basadas en la misma lógica, ambos
+[497.17s -> 499.89s]  maximizando su interés individual.
+[499.89s -> 505.85s]  Aquí te pongo un ejemplo de un trader individual que está operando el Mini-Sep 500 posicionado
+[505.85s -> 511.73s]  corto 400 contratos. Y en este momento tiene una ganancia potencial de más de medio millón
+[511.73s -> 520.73s]  de dólares. 18.82 es el mínimo diario, el precio hace nuevo mínimo, el beneficio potencial
+[520.73s -> 527.89s]  supera los 700 mil dólares. Es un operador que está manejando 400 contratos en el
+[527.89s -> 533.35s]  Mini-Sep 500 en una operativa intradillaria. Aquí está saliendo del mercado, girando la
+[533.35s -> 541.21s]  posición, entrando largo 375 contratos. El Mini-Sep 500 es un mercado suficientemente
+[541.21s -> 545.61s]  profundo como para permitirle esa operativa. No podría hacer la misma operativa en un
+[545.61s -> 549.17s]  mercado como el del futuro del petróleo, por ejemplo, porque se quedaría con un precio
+[549.17s -> 555.89s]  medio muy malo. Y otros operadores podrían ir directamente en contra de sus posiciones.
+[555.89s -> 560.93s]  Veamos un ejemplo en el mercado del futuro del petróleo, donde la manipulación es tan
+[560.93s -> 567.05s]  evidente. Tenemos una sesión asiática que arranca al alza. Europa impulso al cista haciendo
+[567.05s -> 572.65s]  nuevos máximos. Sesión americana, sesión cash, nuevos máximos y nuevos máximos. Este
+[572.65s -> 579.05s]  sentimiento al cista lleva al público a participar en estos niveles comprando.
+[579.05s -> 583.73s]  Pero después el mercado cae en picado. Todos los participantes que han entrado
+[583.73s -> 589.15s]  tomando posiciones largas son expulsados con este movimiento bajista que acaba rompiendo
+[589.15s -> 594.53s]  los mínimos de la sesión asiática. Aquí el público es expulsado porque es obligado
+[594.53s -> 601.49s]  a vender quién está comprando sus ventas. Sus ventas son acumuladas por traders institucionales.
+[601.49s -> 606.45s]  Con este movimiento de inducción primero al alza para que los participantes compren
+[606.45s -> 611.25s]  y de caída abrupta del precio para que vendan, para que se sentan obligados a
+[611.25s -> 617.45s]  salir ellos están comprando. A continuación el precio puede reemprender la senda al cista.
+[617.45s -> 624.45s]  Al cierre de la sesión cash el precio está en este nivel. Habrió la sesión cash, la sesión
+[624.45s -> 628.81s]  americana en este nivel y cierra muy cerca del punto de apertura. ¿Qué quiere decir?
+[628.81s -> 636.37s]  Que un mercado se vaya al alza, se vaya a la baja y cierre muy cerca del punto de apertura.
+[636.37s -> 641.77s]  Esto es casualidad, esto es una maniobra generada por los traders institucionales que
+[641.77s -> 647.11s]  inducen al público a comprar y después le expulsan para posicionarse atendiendo a su
+[647.11s -> 652.17s]  propia limitante al tamaño de su cuenta. ¿Necesitan hacer esto? ¿Qué hace el mercado?
+[652.17s -> 657.37s]  El lunes siguiente, después de la acción del fin de semana, abre al alza con un gap,
+[657.37s -> 663.69s]  crea un gap. Los participantes que están cortos al cierre quedan fulminados con una pérdida.
+[663.69s -> 670.33s]  El movimiento al cista sigue generando nuevos máximos en la sesión asiática y Europa arranca
+[670.33s -> 680.01s]  con un movimiento lento hacia abajo. Y finalmente salto al cista generando nuevos máximos. El público
+[680.01s -> 684.37s]  ve este movimiento al cista y este movimiento al cista como una inducción a participar
+[684.37s -> 690.25s]  comprando y los operadores que forman parte del público que compran estos niveles son expulsados
+[690.25s -> 697.17s]  a continuación con estos movimientos bajistas. Un movimiento bajista acelerado que rompe por
+[697.17s -> 704.65s]  debajo del mínimo de la sesión europea que acaba de expulsar al público. Las ventas por parte
+[704.65s -> 709.77s]  del público son compras por parte del trader institucional que está preparado para seguir
+[709.77s -> 715.05s]  moviendo el precio al alza. Nuevos máximos en la sesión cash. El público compra,
+[715.05s -> 719.53s]  el trader institucional mueve el mercado en su contra y todas las compras del público
+[719.53s -> 725.37s]  se convierten en venta y esta venta es acumulada nuevamente por el trader institucional. Este es
+[725.37s -> 731.01s]  el mecanismo. Sucede día a día en todos los mercados. En el mercado del futuro del petróleo
+[731.01s -> 738.09s]  es muy evidente. La manipulación salta a la vista. Europa después de un movimiento más o menos
+[738.09s -> 744.45s]  lateral durante la sesión asiática arranca lentamente hacia abajo e inmediatamente movimiento
+[744.45s -> 750.45s]  al cista acelerado. Este escape al cista, aquí lo vemos en el volumen, este escape al cista lo genera
+[750.45s -> 756.89s]  los traders institucionales. El público ve esto como la señal definitiva de compra participa
+[756.89s -> 762.77s]  largo y a continuación mueve en el mercado en su contra para expulsarle. Cuando él sale,
+[762.77s -> 768.73s]  el trader institucional continúa con su maniobra de toma de posiciones. Esta es
+[768.73s -> 772.45s]  avanza del precio. Esto es algo que sucede un día tras otro en un mercado y en otro.
+[772.45s -> 778.21s]  Y estas huellas son fáciles de leer y las puedes aprender a utilizar a tu favor detectando que es
+[778.21s -> 783.17s]  lo que está sucediendo, no respondiendo de forma impulsiva ni emocional, entendiendo que lo que
+[783.17s -> 788.33s]  hace el precio es la respuesta necesaria a la limitante de los traders institucionales.
+[788.33s -> 794.01s]  Retomemos el hilo. ¿Cómo lo hacen los traders institucionales para comunicarse entre ellos?
+[794.01s -> 800.49s]  Lo hacen detectando el camino del menor esfuerzo, que es el que seguirá el precio. Imaginemos
+[800.49s -> 804.65s]  una operativa desde un gráfico, aunque hemos dicho que puede que ellos la estén realizando en base a
+[804.65s -> 809.53s]  indicadores macro de todo tipo, pero pensemos en una representación gráfico de la acosización del
+[809.53s -> 814.65s]  precio de un subyacente en un mercado. Esa información, la variación histórica del precio
+[814.65s -> 819.93s]  del subyacente, que es lo que representa el gráfico, está explicando una historia. De hecho,
+[819.93s -> 825.01s]  muchas historias. Un operador entrenado puede leer ese gráfico como un músico, una partitura.
+[825.01s -> 831.93s]  Aquí hay traders atrapados en posiciones relativamente débiles. Si ese operador intenta robar
+[831.93s -> 837.85s]  esas posiciones, sabe perfectamente dónde y cómo actuar y tiene herramientas para hacerlo.
+[837.85s -> 842.53s]  Un operador puede instigar un movimiento alcista en Europa, por ejemplo, comprando a mercado,
+[842.53s -> 847.09s]  o puede observar un movimiento alcista en Europa acelerado. Si lo instiga,
+[847.09s -> 851.77s]  está claro que sigue un plan y están montando una campaña, pero si simplemente observa qué es
+[851.77s -> 856.77s]  lo que está sucediendo, puede detectar a otro operador institucional que está iniciando la campaña.
+[856.77s -> 861.69s]  Y entonces este segundo operador institucional puede aprovechar ese movimiento, esa huella.
+[861.69s -> 866.41s]  Está leyendo lo que hace otro operador y sabe perfectamente que el mercado acabará
+[866.41s -> 870.93s]  respondiendo a la campaña orquestrada por este operador institucional, con lo que,
+[870.93s -> 875.85s]  en vez de luchar en contra de él, puede ser que decide unirse a ese movimiento,
+[875.85s -> 880.53s]  a esa campaña, a esa dirección. El camino de menor resistencia es el que utilizará el
+[880.53s -> 884.65s]  primer operador y el segundo. Ellos estarán buscando la misma oferta de la misma manera y
+[884.65s -> 888.89s]  estarán compitiendo por las mismas posiciones del público, pero no como un equipo, no porque
+[888.89s -> 893.13s]  tengan una alianza y se respeten, sino más bien porque comprenden qué es lo que tienen que
+[893.13s -> 898.01s]  hacer los otros participantes que han quedado atrapados. Ambos buscan aprovechar la misma
+[898.01s -> 902.09s]  debilidad de los otros operadores, de los minoristas. ¿Y qué pasa, puedes preguntarte,
+[902.09s -> 906.37s]  si un operador institucional anticipa equivocadamente un movimiento y queda
+[906.53s -> 910.41s]  atrapado en el mercado? ¿Puede ser explotado por otro gran operador?
+[910.41s -> 916.53s]  Ni lo dutes, claro que sí. De hecho, puede y lo va a ser. Aunque es cierto que los traders
+[916.53s -> 919.93s]  institucionales disponen de herramientas de cobertura que son bastante sofisticadas,
+[919.93s -> 923.81s]  no es un juego de honor entre caballeros, con unas reglas que hay que respetar.
+[923.81s -> 929.65s]  Es una batalla cruenta del fuerte contra el débil, del que se adapta mejor al que se
+[929.65s -> 934.01s]  adapta peor. Veamos cómo transcurre la operativa de nuestro amigo, el trader intradiario,
+[934.09s -> 938.37s]  que operaba con 400 contratos, después de haber ganado más de 700.000 dólares.
+[939.89s -> 945.77s]  En este momento está largo 250 contratos y sigue acumulando. En un mercado que está cayendo,
+[945.77s -> 952.85s]  375, 425, sigue comprando un mercado que cae 425 contratos largos contra un mercado que va en
+[952.85s -> 961.45s]  su contra, que ya le está suponiendo una pérdida asombrosa, 200, 300, 350.000 dólares en su contra.
+[961.45s -> 969.61s]  Y él continúa aguantando 500 contratos largos, con una pérdida potencial de 350.000 dólares.
+[970.61s -> 976.61s]  Luego, el tercer punto, el que más valor tiene para los traders individuales es cómo lo hacen,
+[976.61s -> 981.69s]  cómo logran sus objetivos. Y ahí hace la puerta secreta, ahí está la clave. Si comprendemos
+[981.69s -> 987.17s]  cómo lo hacen, si entendemos a qué responden estos movimientos aparentemente aleatorios del
+[987.17s -> 992.53s]  precio, podemos leer la historia que está contando el mercado y aprovecharla a nuestro favor.
+[992.53s -> 1000.13s]  Manipulación constante, ciclos de compra y venta en cubiertos, zonas en las que el público se rendirá,
+[1000.13s -> 1007.57s]  transferencia de posiciones. Estos son conceptos que pueden apoyar tu operativa. Nos vemos en el mercado.
+[1007.57s -> 1020.85s]  Si quieres acelerar tu comprensión y tu resultados como operador, considera seriamente estudiar
+[1020.85s -> 1024.65s]  con nosotros en trading de futuros y realizar el programa milenio.
