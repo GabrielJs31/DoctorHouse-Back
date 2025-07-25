@@ -1,0 +1,54 @@
+[0.50s → 3.50s]  Buenas tardes, me estimado como se encuentra este día de hoy.
+[4.50s → 10.50s]  Me encuentro mal ya que mi gatito le estaba separando de una pelea que llegera y me mordió.
+[10.50s → 15.50s]  Mi gato tiene todas las vacunas, pero lamentablemente está infectada a mi herida.
+[16.50s → 21.50s]  Lamento mucho escuchar eso. Antes de crear su ficha médica me podría tal vez facilitar su nombre y apellido.
+[21.50s → 24.50s]  Por supuesto. Fausto Minho.
+[24.50s → 27.50s]  ¿Cómo está Fausto Minho? Tal vez me puede dar su nombre de suelo también.
+[27.50s → 32.50s]  Por supuesto. 17.55.688.3426.
+[32.50s → 36.50s]  ¿Podría justamente para crear la ficha también decirme cuál es su género?
+[36.50s → 40.50s]  Por supuesto. Mi género es masculino.
+[40.50s → 42.50s]  ¿Ok, tipo de sangre?
+[42.50s → 44.50s]  O positivo.
+[44.50s → 45.50s]  ¿Qué te haces en nacimiento?
+[45.50s → 47.50s]  18.01.2007.
+[47.50s → 48.50s]  ¿Cuántas años tiene?
+[48.50s → 49.50s]  18 años.
+[49.50s → 53.50s]  ¿Ok, me podría tal vez facilitar su número convencional?
+[53.50s → 55.50s]  Eso no dispongo el momento.
+[55.50s → 59.50s]  Entendido. Entonces podría facilitarme su número de teléfono.
+[59.50s → 64.50s]  Por supuesto. 097877655.
+[64.50s → 66.50s]  Listo.
+[66.50s → 70.50s]  La fecha del día de hoy es el 24 de 07 de 25.
+[70.50s → 71.50s]  Perfecto.
+[71.50s → 74.50s]  Ahora, su motivo de consulta cuál es?
+[74.50s → 80.50s]  El motivo de consulta es que quiero saber qué medicación tomar para la infección en mi mano.
+[81.50s → 85.50s]  Ok, tal vez tiene algunos antecedentes los cuales nos podría facilitar.
+[85.50s → 89.50s]  Acedentes personales, antecedentes familiares, alergias.
+[89.50s → 92.50s]  Sí, mi novia me dejó. Y alergias no tengo.
+[92.50s → 95.50s]  Ok, antecedentes familiares.
+[95.50s → 99.50s]  Me abandonó mi padre.
+[99.50s → 103.50s]  Lamento mucho ir eso. Alergias.
+[103.50s → 105.50s]  No, ningún tipo de alergia.
+[106.50s → 111.50s]  Tal vez ha tenido usted una intervenida quirúrgica alguna vez?
+[111.50s → 119.50s]  Sí, por un calculo en el cerebro.
+[119.50s → 123.50s]  Listo. Tal vez usted consume medicamentos?
+[123.50s → 126.50s]  Actualmente no, ninguno.
+[126.50s → 128.50s]  Tiene problemas de coagulación?
+[128.50s → 130.50s]  Espero que no.
+[130.50s → 132.50s]  Problemas cardiovasculares?
+[132.50s → 137.50s]  Supongo que sí, ya que soy fumador y a veces tengo mis sospechas.
+[137.50s → 140.50s]  Lo felicito. Tiene problemas anestésicos?
+[140.50s → 145.50s]  Me coge la anestesia un poco lento. Tengo que suprime con altas dosis.
+[145.50s → 151.50s]  Ok, Fausto. Usted me acaba de mencionar que usted sí fuma, pero usted consume alcohol?
+[151.50s → 153.50s]  Lo dejé hace una semana.
+[153.50s → 155.50s]  Parece perfecto.
+[156.50s → 162.50s]  Voy a proceder ahorita a leer sus datos de signos vitales.
+[162.50s → 167.50s]  Pesta pesa 60 kilos. Tiene una frecuencia respiratoria de 15.
+[167.50s → 170.50s]  Una frecuencia cardíaca de 70. LPM.
+[170.50s → 174.50s]  Una presión arterial de 120 sobre 80.
+[174.50s → 179.50s]  Una saturación de oxígeno de 97. Y una temperatura corporal de 37 grados.
+[179.50s → 186.50s]  En su tratamiento le vamos a enviar sulfa de asinda de plata tubo del número uno.
+[186.50s → 192.50s]  Y el diagnóstico presentivo que tenemos de momento es que usted tiene una infección de sitio quirúrgico.
+[192.50s → 201.50s]  Y el examen físico que le hemos realizado, hemos podido identificar que en su cabeza y cuello tiene tumores, incluido en el toro.
+[201.50s → 203.50s]  Ha sido un gusto esto.
+[203.50s → 205.50s]  Muchas gracias. Me voy a morir.
