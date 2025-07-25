@@ -93,8 +93,11 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
         "- intervenciones_quirúrgicas\n- problemas_coagulación\n- problemas_anestésicos\n- alcohol\n"
         "### 5. SIGNOS VITALES\n- peso_kg\n- saturación_oxígeno\n- frecuencia_respiratoria\n"
         "- frecuencia_cardíaca\n- presión_arterial\n- temperatura_c\n"
-        "### 6. EXAMEN FÍSICO\n- cabeza_cuello\n- tórax\n- rscs\n- abdomen\n- extremidades\n"
+        "### 6. EXAMEN FÍSICO\n- cabeza_cuello\n- tórax\n- rscs\n- abdomen\n- extremidades\n" \
         "### 7. DIAGNÓSTICO Y TRATAMIENTO\n- diagnóstico_presuntivo\n- tratamiento"
+        "- si no encuentras tratamientos ni diagnostico en la transcripcion analiza la informacion anteriormente dada y da un diagnostico y un tratamiento recomendado con medicinas y cualquier parte que sea rellena de esa manera pon: Consulte a su médico para más información \n- diagnóstico_presuntivo\n - tratamiento"
+        "- Recomendar tratamiento con la info dada antes: "
+        "- Formato Medicamento: Nombre x miligramos cada x horas por x dias"
     )
     prompt = (
         f"{prompt_intro}\n\n{fields_list}\n"
@@ -102,7 +105,15 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
     )
 
     headers = {"Content-Type": "application/json", "api-key": AZURE_API_KEY}
-    payload = {"messages": [{"role": "user", "content": prompt}], "temperature": 0}
+    payload = {
+        "messages": [
+            {"role": "system",    "content": "Eres un experto en medicina y extracción de datos clínicos. Tu tarea es extraer información de historias clínicas."},  # contexto inicial :contentReference[oaicite:0]{index=0}
+            {"role": "user",      "content": prompt},    # tu solicitud real :contentReference[oaicite:1]{index=1}
+            #{"role": "assistant", "content": "JSON con ejemplo: {...}"}  # ejemplo (few-shot) :contentReference[oaicite:2]{index=2}
+        ],
+        "temperature": 0.0,
+        "max_tokens": 1024
+    }
 
     async with httpx.AsyncClient(timeout=30) as client:
         resp = await client.post(
