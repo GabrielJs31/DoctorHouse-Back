@@ -1,8 +1,6 @@
-# methods.py
-
 import json
 import re
-import time
+import tempfile
 from pathlib import Path
 from typing import Any
 from faster_whisper import WhisperModel
@@ -16,14 +14,14 @@ BASE_DIR = Path(__file__).parent
 AUDIO_DIR = BASE_DIR / "audio_files"
 AUDIO_DIR.mkdir(exist_ok=True, parents=True)
 
-def save_file(file: UploadFile, directory: Path = AUDIO_DIR) -> Path:
+def save_file(file: UploadFile) -> Path:
     
-    timestamp = int(time.time())
-    filename = f"{timestamp}_{file.filename}"
-    path = directory / filename
-    with open(path, "wb") as f:
-        f.write(file.file.read())
-    return path
+    suffix = Path(file.filename).suffix or ""
+    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+    tmp.write(file.file.read())
+    tmp.flush()
+    tmp.close()
+    return Path(tmp.name)
 
 def transcribe_whisper(path: Path) -> str:
     
