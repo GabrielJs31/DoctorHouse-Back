@@ -1,121 +1,141 @@
-import json
 import os
 import re
-import time
+import json
+import httpx
+from dotenv import load_dotenv, find_dotenv
+from fastapi import HTTPException
 from typing import Dict, Any
-
-import httpx  # pip install httpx
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-from faster_whisper import WhisperModel  # pip install faster-whisper
-from fastapi.middleware.cors import CORSMiddleware
-from pathlib import Path
-from dotenv import load_dotenv
-import openai  # pip install openai
-import uvicorn
+from methods import clean_whisper_timestamps
 
 
+load_dotenv(find_dotenv())
 
-
-# Carga variables de entorno
-env_path = Path(__file__).parent / '.env'
-if env_path.exists():
-    load_dotenv(dotenv_path=env_path)
-else:
-    load_dotenv()
-
-# Función para validar entornos
-def get_env(var_name: str) -> str:
-    value = os.getenv(var_name)
-    if not value:
-        raise RuntimeError(f"La variable de entorno '{var_name}' no está definida.")
-    return value
-
-# Configuración Azure
-AZURE_API_KEY      = get_env("AZURE_API_KEY")
-AZURE_API_VERSION  = get_env("AZURE_OPENAI_API_VERSION")
-AZURE_API_ENDPOINT = get_env("AZURE_OPENAI_ENDPOINT")
-
-# (opcional) Configuración cliente OpenAI, no usado en httpx pero por consistencia
-openai.api_key     = AZURE_API_KEY
-openai.api_version = AZURE_API_VERSION
-openai.api_base    = AZURE_API_ENDPOINT
-
-# Prepara carpeta de audio
-audio_dir = Path(__file__).parent / "audio"
-audio_dir.mkdir(parents=True, exist_ok=True)
-
-# Carga modelo Whisper
-whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
-
-# Inicializa FastAPI
-app = FastAPI(title="Servicio Unificado: Transcribe + Extracción Historia Clínica IA")
-
-origins = ["*"]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class AIResponse(BaseModel):
-    status: str
-    extracted_data: Dict[str, Any]
-
-
-def clean_json_response(raw: str) -> Dict[str, Any]:
-    # Limpia posibles bloques de markdown y parsea JSON
-    cleaned = re.sub(r'^```json\s*|\s*```$', '', raw, flags=re.IGNORECASE).strip()
-    try:
-        return json.loads(cleaned)
-    except json.JSONDecodeError as e:
-        raise HTTPException(status_code=500, detail=f"Error parseando JSON de IA: {e}")
+AZURE_API_KEY = os.getenv("AZURE_API_KEY")
+AZURE_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")
+AZURE_API_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 
 
 async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
-    # Construye prompt con todos los campos requeridos
+    
+    # 2) Limpia la transcripción
+    clean_txt = clean_whisper_timestamps(txt)
     prompt_intro = (
-        "Extrae todos los campos de la historia clínica del siguiente texto y organízalos en formato JSON. "
-        "Si algún dato falta, devuelve 'N/A'. Los datos deben ser solo el valor numérico o texto. "
-        "Ignora cualquier otro texto que no corresponda a los campos."
+        "Extrae todos los campos clínicos del texto y devuelve SOLO JSON válido. Reglas CRÍTICAS:\n"
+        "1. Los campos de datos_personales siempre debes enviarme llenos sin excepciones\n"
+        "2. Para 'fecha_nacimiento': extraer SOLO fecha en formato DD/MM/AAAA\n"
+        "3. Para 'enfermedad_actual': siempre debe estar enfermedad actual con sus tratamientos, incluido al especialista que se derivara el caso si lo requiere y examenes requeridos\n"
+        "4. Para 'posibles_enfermedades': extraer SOLO si existen posibles enfermedades poner tambien el especialista al que se derivara si se lo requiere SI NO existen posibles_enfermedades entonces poner 'No se encontraron otras posibles enfermedades' \n"
+        "5. Para posibles_enfermedades: seguir agregando posibles_enfermedades hasta un máximo de 2, si hay más de 2, solo extraer las 2 más relevantes\n"
+        "6. Para enfermedad_actual y posibles_enfermedades: generar tratamiento, examenes requeridos, derivacion a especialista y recomendaciones en base a examen_fisico y motivo_consulta SOLO si no encuentras en el texto\n"
+        "7. Para derivacion_especialista: SI NO es necesario un especialista solo poner 'Medico General'\n"
+        "8. Para campos numéricos: solo el valor numérico\n"
+        "9. Si un dato no existe: usar 'N/A'\n"
+        "10. Estructura EXACTA requerida:\n"
+        "11. Los campos de datos_personales siempre deben estar completos, no dejar campos vacíos\n"
     )
-    fields_list = (
-        "### 1. DATOS PERSONALES\n"
-        "- nombre\n- apellido\n- cédula\n- sexo\n- tipo_sangre\n- fecha_nacimiento\n"
-        "- edad\n- teléfono\n- móvil\n- fecha_consulta\n"
-        "### 2. MOTIVO DE CONSULTA\n- motivo\n- lugar\n"
-        "### 3. ENFERMEDAD ACTUAL\n- descripción\n"
-        "### 4. ANTECEDENTES\n- personales\n- alergias\n- medicamentos\n"
-        "- problemas_cardiovasculares\n- fuma\n- familiares\n"
-        "- intervenciones_quirúrgicas\n- problemas_coagulación\n- problemas_anestésicos\n- alcohol\n"
-        "### 5. SIGNOS VITALES\n- peso_kg\n- saturación_oxígeno\n- frecuencia_respiratoria\n"
-        "- frecuencia_cardíaca\n- presión_arterial\n- temperatura_c\n"
-        "### 6. EXAMEN FÍSICO\n- cabeza_cuello\n- tórax\n- rscs\n- abdomen\n- extremidades\n" \
-        "### 7. DIAGNÓSTICO Y TRATAMIENTO\n- diagnóstico_presuntivo\n- tratamiento"
-        "- si no encuentras tratamientos ni diagnostico en la transcripcion analiza la informacion anteriormente dada y da un diagnostico y un tratamiento recomendado con medicinas y cualquier parte que sea rellena de esa manera pon: Consulte a su médico para más información \n- diagnóstico_presuntivo\n - tratamiento"
-        "- Recomendar tratamiento con la info dada antes: "
-        "- Formato Medicamento: Nombre x miligramos cada x horas por x dias"
-    )
-    prompt = (
-        f"{prompt_intro}\n\n{fields_list}\n"
-        f"\nTexto:\n\"\"\"\n{txt}\n\"\"\""
-    )
+    # 3) Estructura detallada (original ampliada)
+    expected = {
+           "datos_personales": {
+                "nombre": "",
+                "apellido": "",
+                "cédula": "",
+                "sexo": "",
+                "tipo_sangre": "",
+                "fecha_nacimiento": "",
+                "edad": "",
+                "teléfono": "",
+                "móvil": "",
+                "fecha_consulta": ""
+            },
+            "motivo_consulta": {
+                "motivo": "",
+                "lugar": ""
+            },
+            "enfermedad_actual": {
+                "descripción": "",
+                "tratamiento": "",
+                "examenes_requeridos": "",
+                "derivacion_especialista": "",
+                "recomendaciones": ""
+            },
+ 
+            "posibles_enfermedades": {
+                "posible_enfermedad 1": {
+                    "description": "",
+                    "tratamiento": "",
+                    "examenes_requeridos": "",
+                    "derivacion_especialista": "",
+                    "recomendaciones": ""
+                },
+                "posible_enfermedad 2": {
+                    "description": "",
+                    "tratamiento": "",
+                    "examenes_requeridos": "",
+                    "derivacion_especialista": "",
+                    "recomendaciones": ""
+                },
+            },
+            "antecedentes": {
+                "personales": "",
+                "alergias": "",
+                "medicamentos": "",
+                "problemas_cardiovasculares": "",
+                "fuma": "",
+                "familiares": "",
+                "intervenciones_quirúrgicas": "",
+                "problemas_coagulación": "",
+                "problemas_anestésicos": "",
+                "alcohol": ""
+            },
+            "signos_vitales": {
+                "peso_kg": "",
+                "saturación_oxígeno": "",
+                "frecuencia_respiratoria": "",
+                "frecuencia_cardíaca": "",
+                "presión_arterial": "",
+                "temperatura_c": ""
+            },
+            "examen_físico": {
+                "cabeza_cuello": "",
+                "tórax": "",
+                "rscs": "",
+                "abdomen": "",
+                "extremidades": ""
+            },
+            "diagnóstico_tratamiento": {
+                "diagnóstico_presuntivo": "",
+                "tratamiento": ""
+            }
 
-    headers = {"Content-Type": "application/json", "api-key": AZURE_API_KEY}
+        }
+        
+        
+
+    # 4) Prompt: fuerza un único JSON
+    system_prompt = (
+        "Eres un experto en medicina y extracción de datos clínicos. "
+        "Tu tarea es extraer información de historias clínicas.\n\n"
+        f"{prompt_intro}\n"
+        f"Estructura EXACTA requerida:\n{json.dumps(expected, ensure_ascii=False)}\n\n"
+        f"Texto a procesar:\n\"\"\"\n{clean_txt}\n\"\"\""
+        
+        f"{json.dumps(expected, ensure_ascii=False)}"
+    )
     payload = {
         "messages": [
-            {"role": "system",    "content": "Eres un experto en medicina y extracción de datos clínicos. Tu tarea es extraer información de historias clínicas."},  # contexto inicial :contentReference[oaicite:0]{index=0}
-            {"role": "user",      "content": prompt},    # tu solicitud real :contentReference[oaicite:1]{index=1}
-            #{"role": "assistant", "content": "JSON con ejemplo: {...}"}  # ejemplo (few-shot) :contentReference[oaicite:2]{index=2}
+            {"role": "system", "content": system_prompt},
+            {"role": "user",   "content": clean_txt}
         ],
-        "temperature": 0.0,
+        "temperature": 0.1,
         "max_tokens": 1024
     }
+    headers = {
+        "Content-Type": "application/json",
+        "api-key": AZURE_API_KEY
+    }
 
-    async with httpx.AsyncClient(timeout=30) as client:
+    # 5) Llamada a Azure OpenAI
+    async with httpx.AsyncClient(timeout=30.0) as client:
         resp = await client.post(
             AZURE_API_ENDPOINT,
             params={"api-version": AZURE_API_VERSION},
@@ -123,58 +143,20 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
             json=payload
         )
     if resp.status_code != 200:
-        raise HTTPException(status_code=502, detail=f"Error IA ({resp.status_code}): {resp.text}")
+        raise HTTPException(502, f"Error IA {resp.status_code}: {resp.text}")
 
-    data = resp.json()
-    raw = data.get("choices", [])[0].get("message", {}).get("content", "")
-    if not raw or not raw.strip():
-        raise HTTPException(status_code=502, detail="Respuesta vacía de IA: no hay contenido para parsear")
-    return clean_json_response(raw)
+    # 6) Extrae el texto bruto y limpia fences Markdown
+    raw = resp.json().get("choices", [])[0].get("message", {}).get("content", "")
+    cleaned = re.sub(r"^```(?:json)?|```$", "", raw, flags=re.IGNORECASE).strip()
 
+    # 7) Extrae solo el primer objeto JSON
+    decoder = json.JSONDecoder()
+    try:
+        obj, _ = decoder.raw_decode(cleaned)
+    except json.JSONDecodeError as e:
+        raise HTTPException(
+            502,
+            f"Error parseando JSON de IA: {e}\nRespuesta cruda:\n{repr(cleaned)}"
+        )
 
-@app.post("/transcribe", response_model=AIResponse)
-async def transcribe_audio(file: UploadFile = File(...)):
-    # Aceptar audio wav, mp3, ogg
-    filename = file.filename.lower()
-    if not (file.content_type.startswith("audio/") or filename.endswith(('.wav', '.mp3', '.ogg'))):
-        raise HTTPException(status_code=400, detail="Solo archivos de audio permitidos (.wav, .mp3, .ogg)")
-
-    # Guarda audio en carpeta `audio`
-    audio_path = audio_dir / file.filename
-    with open(audio_path, "wb") as f:
-        f.write(await file.read())
-
-    # Transcribe audio
-    start = time.time()
-    segments, _ = whisper_model.transcribe(str(audio_path), beam_size=1, vad_filter=True)
-    transcription = "\n".join(f"[{s.start:.2f}s → {s.end:.2f}s] {s.text}" for s in segments)
-    print(f"Transcripción en {time.time() - start:.1f}s")
-
-    # Guarda la transcripción en un archivo .txt
-    txt_path = audio_path.with_suffix('.txt')
-    with open(txt_path, 'w', encoding='utf-8') as f:
-        f.write(transcription)
-
-    # Extrae datos con Azure
-    extracted = await extract_data_via_azure(transcription)
-
-    # Devuelve solo el JSON con extracted_data
-    return JSONResponse(content={"status": "ok", "extracted_data": extracted})
-
-
-@app.post("/upload_txt", response_model=AIResponse)
-async def upload_txt(file: UploadFile = File(...)):
-    if file.content_type != "text/plain":
-        raise HTTPException(status_code=400, detail="Solo archivos .txt permitidos")
-    txt = (await file.read()).decode("utf-8", errors="strict")
-    extracted = await extract_data_via_azure(txt)
-    return JSONResponse(content={"status": "ok", "extracted_data": extracted})
-
-
-@app.get("/health")
-def health():
-    return {"status": "alive"}
-
-
-if __name__ == "__main__":
-    uvicorn.run("api_IA:app", host="0.0.0.0", port=8080, reload=True)
+    return obj
