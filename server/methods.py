@@ -39,3 +39,25 @@ def clean_json_response(raw: str) -> Any:
     except json.JSONDecodeError:
         # Manejo básico; ajusta si usas otro parser
         return raw
+
+def calculate_bmi(peso_str: str, altura_str: str) -> float:
+    
+    # Extraer valores numéricos
+    peso_val = re.sub(r"[^0-9.]", "", peso_str)
+    altura_val = re.sub(r"[^0-9.]", "", altura_str)
+    if not peso_val or not altura_val:
+        raise ValueError("Peso y altura deben contener valores numéricos")
+
+    peso = float(peso_val)
+    altura = float(altura_val)
+
+    # Normalizar altura en metros si viene en cm
+    if altura > 3:
+        altura = altura / 100.0
+
+    if altura <= 0:
+        raise ValueError("Altura debe ser mayor que cero")
+
+    imc = peso / (altura ** 2)
+    return round(imc, 2)
+

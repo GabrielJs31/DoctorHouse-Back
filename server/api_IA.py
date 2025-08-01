@@ -88,7 +88,7 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
                 "alcohol": ""
             },
             "signos_vitales": {
-                "peso_kg": "",
+                
                 "saturación_oxígeno": "",
                 "frecuencia_respiratoria": "",
                 "frecuencia_cardíaca": "",
@@ -96,6 +96,8 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
                 "temperatura_c": ""
             },
             "examen_físico": {
+                "altura_cm": "",
+                "peso_kg": "",
                 "cabeza_cuello": "",
                 "tórax": "",
                 "rscs": "",
@@ -105,12 +107,16 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
             "diagnóstico_tratamiento": {
                 "diagnóstico_presuntivo": "",
                 "tratamiento": ""
+            },
+            "IMC": {
+                "valor": "",
+                "clasificacion": ""
             }
+            
 
         }
-        
-        
 
+        
     # 4) Prompt: fuerza un único JSON
     system_prompt = (
         "Eres un experto en medicina y extracción de datos clínicos. "
