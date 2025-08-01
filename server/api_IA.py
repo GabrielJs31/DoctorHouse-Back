@@ -29,9 +29,11 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
         "6. Para enfermedad_actual y posibles_enfermedades: generar tratamiento, examenes requeridos, derivacion a especialista y recomendaciones en base a examen_fisico y motivo_consulta SOLO si no encuentras en el texto\n"
         "7. Para derivacion_especialista: SI NO es necesario un especialista solo poner 'Medico General'\n"
         "8. Para campos numéricos: solo el valor numérico\n"
-        "9. Si un dato no existe: usar 'N/A'\n"
-        "10. Estructura EXACTA requerida:\n"
-        "11. Los campos de datos_personales siempre deben estar completos, no dejar campos vacíos\n"
+        "9. Para el indice_masa_corporal: calcularlo con peso y altura,con la siguiente formula: IMC = peso(kg) / (altura(m)^2) si no hay altura poner 'Datos insuficientes'\n"
+        "10. Para el indice_masa_corporal: devolver el valor y la clasificación (Bajo peso, Normal, Sobrepeso, Obesidad) esto se clasifica segun, Clasificación: < 18,5: Bajo peso; 18,5–24,9: Peso normal; 25,0–29,9: Sobrepeso; 30,0–34,9: Obesidad grado I; 35,0–39,9: Obesidad grado II; ≥ 40,0: Obesidad grado III (mórbida)\n"
+        "11. Si un dato no existe: usar 'N/A'\n"
+        "12. Estructura EXACTA requerida:\n"
+        "13. Los campos de datos_personales siempre deben estar completos, no dejar campos vacíos\n"
     )
     # 3) Estructura detallada (original ampliada)
     expected = {
@@ -88,7 +90,6 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
                 "alcohol": ""
             },
             "signos_vitales": {
-                
                 "saturación_oxígeno": "",
                 "frecuencia_respiratoria": "",
                 "frecuencia_cardíaca": "",
@@ -96,8 +97,6 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
                 "temperatura_c": ""
             },
             "examen_físico": {
-                "altura_cm": "",
-                "peso_kg": "",
                 "cabeza_cuello": "",
                 "tórax": "",
                 "rscs": "",
@@ -107,12 +106,7 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
             "diagnóstico_tratamiento": {
                 "diagnóstico_presuntivo": "",
                 "tratamiento": ""
-            },
-            "IMC": {
-                "valor": "",
-                "clasificacion": ""
             }
-            
 
         }
 
