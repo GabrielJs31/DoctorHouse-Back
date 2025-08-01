@@ -31,7 +31,8 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
         "8. Para campos numéricos: solo el valor numérico\n"
         "9. Si un dato no existe: usar 'N/A'\n"
         "10. Estructura EXACTA requerida:\n"
-        "11. Los campos de datos_personales siempre deben estar completos, no dejar campos vacíos\n"
+        "11.Si el peso o altura se dicen en libras, metros o pies, convertir a kg y cm respectivamente\n" 
+        "12. Los campos de datos_personales siempre deben estar completos, no dejar campos vacíos\n"
     )
     # 3) Estructura detallada (original ampliada)
     expected = {
