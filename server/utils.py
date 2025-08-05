@@ -40,6 +40,7 @@ def clean_json_response(raw: str) -> Any:
         # Manejo básico; ajusta si usas otro parser
         return raw
 
+# Extracccion y validacion de datos altura y peso
 def calculate_bmi(peso_str: str, altura_str: str) -> float:
     
     # Extraer valores numéricos
@@ -60,4 +61,33 @@ def calculate_bmi(peso_str: str, altura_str: str) -> float:
 
     imc = peso / (altura ** 2)
     return round(imc, 2)
+
+def imc_calculate(data):
+    """
+    Extrae peso y altura del JSON clínico, calcula el IMC y lo agrega al campo correspondiente.
+    Modifica el diccionario data in-place y lo retorna.
+    """
+    from utils import calculate_bmi  # Importación local para evitar ciclos
+    examen = data.get("examen_físico", {})
+    peso_str = examen.get("peso_kg", "")
+    altura_str = examen.get("altura_cm", "")
+    try:
+        imc_val = calculate_bmi(peso_str, altura_str)
+    except Exception:
+        imc_val = None
+    if "IMC" not in data:
+        data["IMC"] = {"valor": None, "clasificacion": ""}
+    data["IMC"]["valor"] = imc_val
+    if imc_val is None:
+        clasif = "N/A"
+    elif imc_val < 18.5:
+        clasif = "Bajo peso"
+    elif imc_val < 25:
+        clasif = "Normal"
+    elif imc_val < 30:
+        clasif = "Sobrepeso"
+    else:
+        clasif = "Obesidad"
+    data["IMC"]["clasificacion"] = clasif
+    return data
 

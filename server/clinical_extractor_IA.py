@@ -5,7 +5,7 @@ import httpx
 from dotenv import load_dotenv, find_dotenv
 from fastapi import HTTPException
 from typing import Dict, Any
-from methods import clean_whisper_timestamps
+from utils import clean_whisper_timestamps
 
 
 load_dotenv(find_dotenv())
@@ -117,8 +117,7 @@ async def extract_data_via_azure(txt: str) -> Dict[str, Any]:
 
         }
 
-        
-    # 4) Prompt: fuerza un único JSON
+    # 4) Construccion del prompt para Azure OpenAI
     system_prompt = (
         "Eres un experto en medicina y extracción de datos clínicos. "
         "Tu tarea es extraer información de historias clínicas.\n\n"
