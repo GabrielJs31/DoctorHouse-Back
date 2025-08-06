@@ -9,7 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 from utils.clean_whisper import clean_whisper_timestamps
 from utils.save_files import save_file
 from utils.whisper_service import transcribe_whisper
-from utils.imc import imc_calculate,calculate_bmi
+from utils.imc import calculate_bmi, calculate_and_append_imc
 
 # Carga variables de entorno
 load_dotenv(find_dotenv())
@@ -192,5 +192,5 @@ class ClinicalExtractorService:
         #Extraer peso y altura, calcular IMC
         data = calculate_bmi(data)
         # Cálculo y anexado de IMC
-        data = imc_calculate(data)
+        data = calculate_and_append_imc(data)
         return data
