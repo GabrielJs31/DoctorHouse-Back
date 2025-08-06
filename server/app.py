@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict, Any
-from clinical_extractor_IA import extract_data_via_azure
+from app.services.clinical_extractor import extract_data_via_azure
 from fastapi import UploadFile, File
 from fastapi.responses import JSONResponse
 from utils import imc_calculate, save_file, transcribe_whisper
