@@ -1,5 +1,6 @@
 import re
 
+#Configuración y extraccion de datos para IMC
 def calculate_bmi(peso_str: str, altura_str: str) -> float:
     
     # Extraer valores numéricos

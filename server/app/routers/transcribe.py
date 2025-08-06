@@ -6,7 +6,7 @@ from schemas.transcript import ClinicalDataResponse
 
 router = APIRouter()
 
-# Instancia del servicio (puede inyectarse)
+# Instancia del servicio
 extractor = ClinicalExtractorService()
 
 @router.post("/", response_model=ClinicalDataResponse)
